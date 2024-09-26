@@ -37,18 +37,18 @@ pipeline {
                 """ 
             }
         }
-    //    stage('Sonar Scan') { 
-    //         environment {
-    //             scannerHome = tool 'sonar-6.0' //refering scanner CLI
-    //         }
-    //         steps {
-    //             script {
-    //                 withSonarQubeEnv('sonar-6.0'){ // referring sonar server
-    //                    sh  "${scannerHome}/bin/sonar-scanner"
-    //                 }
-    //             }
-    //         }
-    //     }
+       stage('Sonar Scan') { 
+            environment {
+                scannerHome = tool 'sonar-6.0' //refering scanner CLI
+            }
+            steps {
+                script {
+                    withSonarQubeEnv('sonar-6.0'){ // referring sonar server
+                       sh  "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
         // stage("Quality Gate"){
         //     steps {
         //         timeout(time:30, unit: 'MINUTES'){
@@ -80,16 +80,16 @@ pipeline {
                 }
             }
         }
-        //  stage('Deploy') { 
-        //      steps {
-        //         script {
-        //             def params = [
-        //                 string(name: 'appVersion', value: "${appVersion}")
-        //             ]
-        //             build job: 'frontend-deploy', parameters: params, wait: false
-        //         }   
-        //     }
-        //  }
+         stage('Deploy') { 
+             steps {
+                script {
+                    def params = [
+                        string(name: 'appVersion', value: "${appVersion}")
+                    ]
+                    build job: 'frontend-deploy', parameters: params, wait: false
+                }   
+            }
+         }
 
     }
      post { 
